@@ -5,7 +5,7 @@ import { autobind } from 'core-decorators';
 import { API, APIKEY } from '../config';
 import { WeatherData } from '../types';
 const loader = require('../assets/loader.svg');
-// import WeatherDisplay from './WeatherDisplay';
+import WeatherDisplay from './WeatherDisplay';
 
 interface Props {}
 
@@ -41,18 +41,24 @@ export default class Weather extends Component<Props, State> {
 					icon
 				} = data.current_observation;
 				const weatherData = { display_location, temp_c, temp_f, weather, icon };
-				this.setState({ weatherData });
+				this.setState({ weatherData, loading: false });
 			})
 			.catch(err => console.log(err));
 	}
 
 	render() {
 		console.log(this.state);
+
+		const loading = this.state.loading && <img src={loader} />;
+
+		const weatherDisplay = this.state.weatherData && (
+			<WeatherDisplay weatherData={this.state.weatherData} />
+		);
+
 		return (
 			<div>
-				<h3>Weather Works</h3>
-				{this.state.loading && <img src={loader} />}
-				{/* {this.state.data && <WeatherDisplay data={this.state.data} />} */}
+				{loading}
+				{weatherDisplay}
 			</div>
 		);
 	}

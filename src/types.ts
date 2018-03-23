@@ -17,3 +17,8 @@ export type WeatherData = {
 	weather: string;
 	icon: string;
 };
+
+export type Geolocation = {
+	latitude: number;
+	longitude: number;
+};

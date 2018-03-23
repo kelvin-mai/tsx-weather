@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { autobind } from 'core-decorators';
 
 import { API, APIKEY } from '../config';
-import { WeatherData } from '../types';
+import { WeatherData, Geolocation } from '../types';
 const loader = require('../assets/loader.svg');
 import WeatherDisplay from './WeatherDisplay';
 
@@ -12,8 +12,6 @@ interface Props {}
 interface State {
 	loading: boolean;
 	weatherData?: WeatherData;
-	lat: number;
-	lon: number;
 }
 
 @autobind
@@ -22,15 +20,35 @@ export default class Weather extends Component<Props, State> {
 		super(props);
 		this.state = {
 			loading: true,
-			weatherData: undefined,
-			lat: 37.776289,
-			lon: -122.395234
+			weatherData: undefined
 		};
 	}
 
-	componentDidMount() {
-		const { lat, lon } = this.state;
-		fetch(`${API}${APIKEY}/conditions/q/${lat},${lon}.json`)
+	getCurrentPosition(): Promise<Geolocation> {
+		return new Promise((resolve, reject) => {
+			if (!navigator.geolocation) {
+				reject('Geolocation is not supported');
+			} else {
+				console.log('Getting current location...');
+
+				navigator.geolocation.watchPosition(
+					position => {
+						resolve({
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude
+						});
+					},
+					err => {
+						reject(`Can't get current location: ${err.message}`);
+					}
+				);
+			}
+		});
+	}
+
+	getCurrentWeather(geolocation: Geolocation): void {
+		const { latitude, longitude } = geolocation;
+		fetch(`${API}${APIKEY}/conditions/q/${latitude},${longitude}.json`)
 			.then(res => res.json())
 			.then(data => {
 				const {
@@ -40,15 +58,25 @@ export default class Weather extends Component<Props, State> {
 					weather,
 					icon
 				} = data.current_observation;
-				const weatherData = { display_location, temp_c, temp_f, weather, icon };
+				const weatherData = {
+					display_location,
+					temp_c,
+					temp_f,
+					weather,
+					icon
+				};
 				this.setState({ weatherData, loading: false });
 			})
 			.catch(err => console.log(err));
 	}
 
-	render() {
-		console.log(this.state);
+	componentDidMount(): void {
+		this.getCurrentPosition()
+			.then(geolocation => this.getCurrentWeather(geolocation))
+			.catch(err => console.log(err));
+	}
 
+	render() {
 		const loading = this.state.loading && <img src={loader} />;
 
 		const weatherDisplay = this.state.weatherData && (

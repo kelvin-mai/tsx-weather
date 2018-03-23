@@ -1,24 +1,28 @@
 {
-  "name": "weather",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "core-decorators": "^0.20.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts-ts": "2.14.0"
-  },
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
-  },
-  "devDependencies": {
-    "@types/jest": "^22.2.1",
-    "@types/node": "^8.10.0",
-    "@types/react": "^16.0.40",
-    "@types/react-dom": "^16.0.4",
-    "typescript": "^2.7.2"
-  }
+	"name": "weather",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"core-decorators": "^0.20.0",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"react-scripts-ts": "2.14.0"
+	},
+	"scripts": {
+		"start": "react-scripts-ts start",
+		"build": "react-scripts-ts build",
+		"test": "react-scripts-ts test --env=jsdom",
+		"eject": "react-scripts-ts eject",
+		"predeploy": "yarn build",
+		"deploy": "gh-pages -d build"
+	},
+	"devDependencies": {
+		"@types/jest": "^22.2.1",
+		"@types/node": "^8.10.0",
+		"@types/react": "^16.0.40",
+		"@types/react-dom": "^16.0.4",
+		"gh-pages": "^1.1.0",
+		"typescript": "^2.7.2"
+	},
+	"homepage": "http://kelvin-mai.github.io/tsx-weather"
 }

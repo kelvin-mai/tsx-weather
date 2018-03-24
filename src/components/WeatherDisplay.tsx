@@ -3,7 +3,7 @@ import { Component, Fragment } from 'react';
 import { autobind } from 'core-decorators';
 
 import { WeatherData } from '../types';
-import './WeatherDisplay.css';
+import '../styles/WeatherDisplay.css';
 
 const icon = 'https://icons.wxug.com/i/c/i/';
 
@@ -49,6 +49,7 @@ export default class WeatherDisplay extends Component<Props, State> {
 					{weatherData.display_location.state}
 				</h3>
 				<img src={`${icon}${weatherData.icon}.gif`} />
+				<h4>{weatherData.weather}</h4>
 				{degrees}
 				{degreesButton}
 			</Fragment>

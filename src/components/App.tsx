@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import './App.css';
+import './styles/App.css';
 import Weather from './components/Weather';
 
-const logo = require('./logo.svg');
+const logo = require('./assets/logo.svg');
 
 class App extends Component {
 	render() {

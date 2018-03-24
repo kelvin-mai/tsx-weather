@@ -3,6 +3,7 @@ import { Component, Fragment } from 'react';
 import { autobind } from 'core-decorators';
 
 import { WeatherData } from '../types';
+import './WeatherDisplay.css';
 
 const icon = 'https://icons.wxug.com/i/c/i/';
 

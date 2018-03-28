@@ -4,8 +4,9 @@ import { autobind } from 'core-decorators';
 
 import { API, APIKEY } from '../config';
 import { WeatherData, Geolocation } from '../types';
-const loader = require('../assets/loader.svg');
 import WeatherDisplay from './WeatherDisplay';
+
+const loader = require('../assets/loader.svg');
 
 interface Props {}
 
@@ -70,7 +71,7 @@ export default class Weather extends Component<Props, State> {
 			.catch(err => console.log(err));
 	}
 
-	componentDidMount(): void {
+	componentDidMount() {
 		this.getCurrentPosition()
 			.then(geolocation => this.getCurrentWeather(geolocation))
 			.catch(err => console.log(err));

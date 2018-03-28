@@ -1,5 +1,7 @@
 # Show the Local Weather
 
+![Screenshot](/media/screenshot.png)
+
 freeCodeCamp Show the Local Weather built with React and Typescript
 
 ## User Stories
